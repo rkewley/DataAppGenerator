@@ -1,0 +1,52 @@
+
+@(f: Form[MdlDepartments], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.DepartmentsController.saveDepartments(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fDepartmentID")) { fDepartmentID =>
+                <input type="hidden" name="@fDepartmentID.name" id="@fDepartmentID.id" value="@fDepartmentID.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @defining(f("fDepartmentID")) { fDepartmentID =>
+                <input type="hidden" name="@fDepartmentID.name" id="@fDepartmentID.id" value="@fDepartmentID.value">
+			}
+    
+     	}
+
+            @textarea(field = f("fDepartmentName"), args = 'rows -> 2, 'cols -> 100, '_label-> "DepartmentName")
+        	@*@inputText(f("fDepartmentName"), '_label -> "DepartmentName")*@
+
+            @textarea(field = f("fDepartmentHead"), args = 'rows -> 2, 'cols -> 100, '_label-> "DepartmentHead")
+        	@*@inputText(f("fDepartmentHead"), '_label -> "DepartmentHead")*@
+
+            @textarea(field = f("fDepartmentHopePage"), args = 'rows -> 2, 'cols -> 100, '_label-> "DepartmentHopePage")
+        	@*@inputText(f("fDepartmentHopePage"), '_label -> "DepartmentHopePage")*@
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.DepartmentsController.listDepartments">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

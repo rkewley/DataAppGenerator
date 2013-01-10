@@ -1,0 +1,54 @@
+
+@(f: Form[MdlTopicObjectives], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.TopicObjectivesController.saveTopicObjectives(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fTopicObjectiveNumber")) { fTopicObjectiveNumber =>
+                <input type="hidden" name="@fTopicObjectiveNumber.name" id="@fTopicObjectiveNumber.id" value="@fTopicObjectiveNumber.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @defining(f("fTopicObjectiveNumber")) { fTopicObjectiveNumber =>
+                <input type="hidden" name="@fTopicObjectiveNumber.name" id="@fTopicObjectiveNumber.id" value="@fTopicObjectiveNumber.value">
+			}
+    
+     	}
+
+            @textarea(field = f("fObjective"), args = 'rows -> 2, 'cols -> 100, '_label-> "Objective")
+        	@*@inputText(f("fObjective"), '_label -> "Objective")*@
+
+            @{val selectvTopics = SqlTopics.all.map(vTopics => vTopics.selectIdentifier).toSeq
+            select(field = f("fTopic"), options = selectvTopics, args = '_label-> "Topic")}
+    		<a href="@routes.TopicsController.createTopics">Create new Topics</a>
+
+            @{val selectvValueListKSAB = SqlValueListKSAB.all.map(vValueListKSAB => vValueListKSAB.selectIdentifier).toSeq
+            select(field = f("fKSAB"), options = selectvValueListKSAB, args = '_label-> "KSAB")}
+    		<a href="@routes.ValueListKSABController.createValueListKSAB">Create new ValueListKSAB</a>
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.TopicObjectivesController.listTopicObjectives">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

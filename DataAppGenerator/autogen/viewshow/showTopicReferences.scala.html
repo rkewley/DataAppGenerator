@@ -1,0 +1,38 @@
+
+@(vTopicReferences: MdlTopicReferences)
+
+    @import persistence._
+		  
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+     <div class="column span-16">
+		  <h3>TopicReferences Information</h3>
+		  <dl>
+
+		  	<dt>idTopicReferences</dt>
+		  	<dd>@Html(vTopicReferences.vidTopicReferences.toString)</dd>
+
+    		@defining(SqlTopics.select(vTopicReferences.vTopic)){pkModel =>
+      		  <dt>Topic</dt>
+      		  <dd><a href="@routes.TopicsController.showTopics(vTopicReferences.vTopic)">@pkModel.selectIdentifier._2</a></dd>
+    		}
+
+    		@defining(SqlReference.select(vTopicReferences.vReference)){pkModel =>
+      		  <dt>Reference</dt>
+      		  <dd><a href="@routes.ReferenceController.showReference(vTopicReferences.vReference)">@pkModel.selectIdentifier._2</a></dd>
+    		}
+	       </dl>
+     <div>
+       <a href="@routes.TopicReferencesController.listTopicReferences">Return to listing</a>
+     </div>
+	</div>
+   <div class="column span-4 last">
+   </div>
+  </div>
+  }

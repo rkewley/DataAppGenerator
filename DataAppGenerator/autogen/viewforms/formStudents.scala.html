@@ -1,0 +1,88 @@
+
+@(f: Form[MdlStudents], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.StudentsController.saveStudents(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fidStudent")) { fidStudent =>
+                <input type="hidden" name="@fidStudent.name" id="@fidStudent.id" value="@fidStudent.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @defining(f("fidStudent")) { fidStudent =>
+                <input type="hidden" name="@fidStudent.name" id="@fidStudent.id" value="@fidStudent.value">
+			}
+    
+     	}
+
+            @textarea(field = f("fEmail"), args = 'rows -> 2, 'cols -> 100, '_label-> "Email")
+        	@*@inputText(f("fEmail"), '_label -> "Email")*@
+
+            @textarea(field = f("fLastName"), args = 'rows -> 2, 'cols -> 100, '_label-> "LastName")
+        	@*@inputText(f("fLastName"), '_label -> "LastName")*@
+
+            @textarea(field = f("fFirstName"), args = 'rows -> 2, 'cols -> 100, '_label-> "FirstName")
+        	@*@inputText(f("fFirstName"), '_label -> "FirstName")*@
+
+            @textarea(field = f("fPreferredFirstName"), args = 'rows -> 2, 'cols -> 100, '_label-> "PreferredFirstName")
+        	@*@inputText(f("fPreferredFirstName"), '_label -> "PreferredFirstName")*@
+
+            @textarea(field = f("fCadetCompany"), args = 'rows -> 2, 'cols -> 100, '_label-> "CadetCompany")
+        	@*@inputText(f("fCadetCompany"), '_label -> "CadetCompany")*@
+
+            @textarea(field = f("fMajor"), args = 'rows -> 2, 'cols -> 100, '_label-> "Major")
+        	@*@inputText(f("fMajor"), '_label -> "Major")*@
+
+            @textarea(field = f("fBarracksRoom"), args = 'rows -> 2, 'cols -> 100, '_label-> "BarracksRoom")
+        	@*@inputText(f("fBarracksRoom"), '_label -> "BarracksRoom")*@
+
+            @textarea(field = f("fCellPhone"), args = 'rows -> 2, 'cols -> 100, '_label-> "CellPhone")
+        	@*@inputText(f("fCellPhone"), '_label -> "CellPhone")*@
+
+            @textarea(field = f("fHomeTown"), args = 'rows -> 2, 'cols -> 100, '_label-> "HomeTown")
+        	@*@inputText(f("fHomeTown"), '_label -> "HomeTown")*@
+
+            @textarea(field = f("fCadetSports"), args = 'rows -> 2, 'cols -> 100, '_label-> "CadetSports")
+        	@*@inputText(f("fCadetSports"), '_label -> "CadetSports")*@
+
+            @textarea(field = f("fCadetActivities"), args = 'rows -> 2, 'cols -> 100, '_label-> "CadetActivities")
+        	@*@inputText(f("fCadetActivities"), '_label -> "CadetActivities")*@
+
+            @textarea(field = f("fPlannedBranch"), args = 'rows -> 2, 'cols -> 100, '_label-> "PlannedBranch")
+        	@*@inputText(f("fPlannedBranch"), '_label -> "PlannedBranch")*@
+
+            @textarea(field = f("fPlannedPost"), args = 'rows -> 2, 'cols -> 100, '_label-> "PlannedPost")
+        	@*@inputText(f("fPlannedPost"), '_label -> "PlannedPost")*@
+
+            @textarea(field = f("fExpectationsFromCourse"), args = 'rows -> 2, 'cols -> 100, '_label-> "ExpectationsFromCourse")
+        	@*@inputText(f("fExpectationsFromCourse"), '_label -> "ExpectationsFromCourse")*@
+
+            @textarea(field = f("fTopicsToDiscuss"), args = 'rows -> 2, 'cols -> 100, '_label-> "TopicsToDiscuss")
+        	@*@inputText(f("fTopicsToDiscuss"), '_label -> "TopicsToDiscuss")*@
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.StudentsController.listStudents">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

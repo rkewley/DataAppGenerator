@@ -1,0 +1,38 @@
+
+@(vLessonLinkTopicObjectives: MdlLessonLinkTopicObjectives)
+
+    @import persistence._
+		  
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+     <div class="column span-16">
+		  <h3>LessonLinkTopicObjectives Information</h3>
+		  <dl>
+
+		  	<dt>idLessonLinkTopicObjective</dt>
+		  	<dd>@Html(vLessonLinkTopicObjectives.vidLessonLinkTopicObjective.toString)</dd>
+
+    		@defining(SqlLessonLinks.select(vLessonLinkTopicObjectives.vLessonLink)){pkModel =>
+      		  <dt>LessonLink</dt>
+      		  <dd><a href="@routes.LessonLinksController.showLessonLinks(vLessonLinkTopicObjectives.vLessonLink)">@pkModel.selectIdentifier._2</a></dd>
+    		}
+
+    		@defining(SqlTopicObjectives.select(vLessonLinkTopicObjectives.vTopicObjective)){pkModel =>
+      		  <dt>TopicObjective</dt>
+      		  <dd><a href="@routes.TopicObjectivesController.showTopicObjectives(vLessonLinkTopicObjectives.vTopicObjective)">@pkModel.selectIdentifier._2</a></dd>
+    		}
+	       </dl>
+     <div>
+       <a href="@routes.LessonLinkTopicObjectivesController.listLessonLinkTopicObjectives(vLessonLinkTopicObjectives.vLessonLink)">Return to listing</a>
+     </div>
+	</div>
+   <div class="column span-4 last">
+   </div>
+  </div>
+  }

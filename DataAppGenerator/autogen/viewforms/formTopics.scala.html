@@ -1,0 +1,52 @@
+
+@(f: Form[MdlTopics], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.TopicsController.saveTopics(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fTopicsIndex")) { fTopicsIndex =>
+                <input type="hidden" name="@fTopicsIndex.name" id="@fTopicsIndex.id" value="@fTopicsIndex.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @defining(f("fTopicsIndex")) { fTopicsIndex =>
+                <input type="hidden" name="@fTopicsIndex.name" id="@fTopicsIndex.id" value="@fTopicsIndex.value">
+			}
+    
+     	}
+
+            @textarea(field = f("fTopic"), args = 'rows -> 2, 'cols -> 100, '_label-> "Topic")
+        	@*@inputText(f("fTopic"), '_label -> "Topic")*@
+
+            @textarea(field = f("fTopicShortDescription"), args = 'rows -> 2, 'cols -> 100, '_label-> "TopicShortDescription")
+        	@*@inputText(f("fTopicShortDescription"), '_label -> "TopicShortDescription")*@
+
+            @textarea(field = f("fTopicDetailedDescription"), args = 'rows -> 2, 'cols -> 100, '_label-> "TopicDetailedDescription")
+        	@*@inputText(f("fTopicDetailedDescription"), '_label -> "TopicDetailedDescription")*@
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.TopicsController.listTopics">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

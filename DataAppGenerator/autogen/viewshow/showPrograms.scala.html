@@ -1,0 +1,45 @@
+
+@(vPrograms: MdlPrograms)
+
+    @import persistence._
+		  
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+     <div class="column span-16">
+		  <h3>Programs Information</h3>
+		  <dl>
+
+		  	<dt>Program</dt>
+		  	<dd>@Html(vPrograms.vProgram.toString)</dd>
+
+		  	<dt>Name</dt>
+		  	<dd>@Html(vPrograms.vName.toString)</dd>
+
+		  	<dt>Slogan</dt>
+		  	<dd>@Html(vPrograms.vSlogan.toString)</dd>
+
+		  	<dt>Information</dt>
+		  	<dd>@Html(vPrograms.vInformation.toString)</dd>
+
+		  	<dt>ProgramDirector</dt>
+		  	<dd>@Html(vPrograms.vProgramDirector.toString)</dd>
+
+    		@defining(SqlDepartments.select(vPrograms.vDepartment)){pkModel =>
+      		  <dt>Department</dt>
+      		  <dd><a href="@routes.DepartmentsController.showDepartments(vPrograms.vDepartment)">@pkModel.selectIdentifier._2</a></dd>
+    		}
+	       </dl>
+     <div>
+       <a href="@routes.ProgramsController.listPrograms">Return to listing</a>
+     </div>
+	</div>
+   <div class="column span-4 last">
+   </div>
+  </div>
+  }

@@ -1,0 +1,65 @@
+
+@(f: Form[MdlLessons], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.LessonsController.saveLessons(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fLessonIndex")) { fLessonIndex =>
+                <input type="hidden" name="@fLessonIndex.name" id="@fLessonIndex.id" value="@fLessonIndex.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @defining(f("fLessonIndex")) { fLessonIndex =>
+                <input type="hidden" name="@fLessonIndex.name" id="@fLessonIndex.id" value="@fLessonIndex.value">
+			}
+    
+     	}
+
+            @inputText(f("fLessonNumber"), '_label -> "LessonNumber")
+
+            @textarea(field = f("fLessonName"), args = 'rows -> 2, 'cols -> 100, '_label-> "LessonName")
+        	@*@inputText(f("fLessonName"), '_label -> "LessonName")*@
+
+            @textarea(field = f("fAssignment"), args = 'rows -> 2, 'cols -> 100, '_label-> "Assignment")
+        	@*@inputText(f("fAssignment"), '_label -> "Assignment")*@
+
+            @textarea(field = f("fLocation"), args = 'rows -> 2, 'cols -> 100, '_label-> "Location")
+        	@*@inputText(f("fLocation"), '_label -> "Location")*@
+
+            @{val selectvCourses = SqlCourses.all.map(vCourses => vCourses.selectIdentifier).toSeq
+            select(field = f("fidCourse"), options = selectvCourses, args = '_label-> "idCourse")}
+    		<a href="@routes.CoursesController.createCourses">Create new Courses</a>
+
+            @inputText(f("fDuration"), '_label -> "Duration")
+
+            @helper.checkbox(f("fLab"), '_label -> "Lab", '_help->"")
+
+            @textarea(field = f("fLessonSummary"), args = 'rows -> 2, 'cols -> 100, '_label-> "LessonSummary")
+        	@*@inputText(f("fLessonSummary"), '_label -> "LessonSummary")*@
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.LessonsController.listLessons">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

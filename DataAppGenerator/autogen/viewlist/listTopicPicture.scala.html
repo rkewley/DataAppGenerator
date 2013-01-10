@@ -1,0 +1,56 @@
+
+@(listTopicPicture: List[MdlTopicPicture])
+    
+    @import persistence._
+    
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+    <div class="column span-20 last">
+		  <h3>TopicPicture Listing</h3>
+		  <table>
+			<tr>
+				<th>idTopicPicture</th>
+				<th>Topic</th>
+				<th>Hyperlink</th>
+				<th>AlternateText</th>
+				<th>Caption</th>
+				<th>Show</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+
+            @listTopicPicture.map { vTopicPicture =>
+    			
+    		<tr>
+				<td>@vTopicPicture.vidTopicPicture</td>
+
+    		@defining(SqlTopics.select(vTopicPicture.vTopic)){pkModel =>
+      		  <td><a href="@routes.TopicsController.showTopics(vTopicPicture.vTopic)">@pkModel.selectIdentifier._2</a></td>
+    		}
+				<td>@vTopicPicture.vHyperlink</td>
+				<td>@vTopicPicture.vAlternateText</td>
+				<td>@vTopicPicture.vCaption</td>
+
+    			<td><a href="@routes.TopicPictureController.showTopicPicture(vTopicPicture.vidTopicPicture)">Show</a></td>
+    			<td><a href="@routes.TopicPictureController.editTopicPicture(vTopicPicture.vidTopicPicture)">Edit</a></td>
+    	  		<td>
+    	  			<form action="@routes.TopicPictureController.deleteTopicPicture(vTopicPicture.vidTopicPicture)" method="POST">
+    	  			<input type="button" onclick="if (confirm('Are you sure you want to delete?\n  This action cannot be undone.')) submit();" value="delete">
+    	  			</form>
+    	  		</td>
+    		</tr>
+    
+
+      		}
+
+      	</table>
+      <a href="@routes.TopicPictureController.createTopicPicture">Create new TopicPicture</a>
+    </div>
+  </div>
+  }

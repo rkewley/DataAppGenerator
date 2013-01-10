@@ -1,0 +1,48 @@
+
+@(f: Form[MdlUser], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.UserController.saveUser(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("femail")) { femail =>
+                <input type="hidden" name="@femail.name" id="@femail.id" value="@femail.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @textarea(field = f("femail"), args = 'rows -> 2, 'cols -> 100, '_label-> "email")
+        	@*@inputText(f("femail"), '_label -> "email")*@
+
+     	}
+
+            @textarea(field = f("fpassword"), args = 'rows -> 2, 'cols -> 100, '_label-> "password")
+        	@*@inputText(f("fpassword"), '_label -> "password")*@
+
+            @textarea(field = f("fpermissions"), args = 'rows -> 2, 'cols -> 100, '_label-> "permissions")
+        	@*@inputText(f("fpermissions"), '_label -> "permissions")*@
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.UserController.listUser">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

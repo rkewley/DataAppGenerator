@@ -1,0 +1,34 @@
+
+@(vUser: MdlUser)
+
+    @import persistence._
+		  
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+     <div class="column span-16">
+		  <h3>User Information</h3>
+		  <dl>
+
+		  	<dt>email</dt>
+		  	<dd>@Html(vUser.vemail.toString)</dd>
+
+		  	<dt>password</dt>
+		  	<dd>@Html(vUser.vpassword.toString)</dd>
+
+		  	<dt>permissions</dt>
+		  	<dd>@Html(vUser.vpermissions.toString)</dd>
+	       </dl>
+     <div>
+       <a href="@routes.UserController.listUser">Return to listing</a>
+     </div>
+	</div>
+   <div class="column span-4 last">
+   </div>
+  </div>
+  }

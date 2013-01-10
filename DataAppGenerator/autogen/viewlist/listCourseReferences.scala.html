@@ -1,0 +1,55 @@
+
+@(listCourseReferences: List[MdlCourseReferences])
+    
+    @import persistence._
+    
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+    <div class="column span-20 last">
+		  <h3>CourseReferences Listing</h3>
+		  <table>
+			<tr>
+				<th>idCourseReferences</th>
+				<th>Course</th>
+				<th>Reference</th>
+				<th>Show</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+
+            @listCourseReferences.map { vCourseReferences =>
+    			
+    		<tr>
+				<td>@vCourseReferences.vidCourseReferences</td>
+
+    		@defining(SqlCourses.select(vCourseReferences.vCourse)){pkModel =>
+      		  <td><a href="@routes.CoursesController.showCourses(vCourseReferences.vCourse)">@pkModel.selectIdentifier._2</a></td>
+    		}
+
+    		@defining(SqlReference.select(vCourseReferences.vReference)){pkModel =>
+      		  <td><a href="@routes.ReferenceController.showReference(vCourseReferences.vReference)">@pkModel.selectIdentifier._2</a></td>
+    		}
+
+    			<td><a href="@routes.CourseReferencesController.showCourseReferences(vCourseReferences.vidCourseReferences)">Show</a></td>
+    			<td><a href="@routes.CourseReferencesController.editCourseReferences(vCourseReferences.vidCourseReferences)">Edit</a></td>
+    	  		<td>
+    	  			<form action="@routes.CourseReferencesController.deleteCourseReferences(vCourseReferences.vidCourseReferences)" method="POST">
+    	  			<input type="button" onclick="if (confirm('Are you sure you want to delete?\n  This action cannot be undone.')) submit();" value="delete">
+    	  			</form>
+    	  		</td>
+    		</tr>
+    
+
+      		}
+
+      	</table>
+      <a href="@routes.CourseReferencesController.createCourseReferences">Create new CourseReferences</a>
+    </div>
+  </div>
+  }

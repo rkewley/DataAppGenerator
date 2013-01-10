@@ -1,0 +1,38 @@
+
+@(vCourseReferences: MdlCourseReferences)
+
+    @import persistence._
+		  
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+     <div class="column span-16">
+		  <h3>CourseReferences Information</h3>
+		  <dl>
+
+		  	<dt>idCourseReferences</dt>
+		  	<dd>@Html(vCourseReferences.vidCourseReferences.toString)</dd>
+
+    		@defining(SqlCourses.select(vCourseReferences.vCourse)){pkModel =>
+      		  <dt>Course</dt>
+      		  <dd><a href="@routes.CoursesController.showCourses(vCourseReferences.vCourse)">@pkModel.selectIdentifier._2</a></dd>
+    		}
+
+    		@defining(SqlReference.select(vCourseReferences.vReference)){pkModel =>
+      		  <dt>Reference</dt>
+      		  <dd><a href="@routes.ReferenceController.showReference(vCourseReferences.vReference)">@pkModel.selectIdentifier._2</a></dd>
+    		}
+	       </dl>
+     <div>
+       <a href="@routes.CourseReferencesController.listCourseReferences">Return to listing</a>
+     </div>
+	</div>
+   <div class="column span-4 last">
+   </div>
+  </div>
+  }

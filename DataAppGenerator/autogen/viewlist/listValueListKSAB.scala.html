@@ -1,0 +1,45 @@
+
+@(listValueListKSAB: List[MdlValueListKSAB])
+    
+    @import persistence._
+    
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+    <div class="column span-20 last">
+		  <h3>ValueListKSAB Listing</h3>
+		  <table>
+			<tr>
+				<th>KSAB</th>
+				<th>Show</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+
+            @listValueListKSAB.map { vValueListKSAB =>
+    			
+    		<tr>
+				<td>@vValueListKSAB.vKSAB</td>
+
+    			<td><a href="@routes.ValueListKSABController.showValueListKSAB(vValueListKSAB.vKSAB)">Show</a></td>
+    			<td><a href="@routes.ValueListKSABController.editValueListKSAB(vValueListKSAB.vKSAB)">Edit</a></td>
+    	  		<td>
+    	  			<form action="@routes.ValueListKSABController.deleteValueListKSAB(vValueListKSAB.vKSAB)" method="POST">
+    	  			<input type="button" onclick="if (confirm('Are you sure you want to delete?\n  This action cannot be undone.')) submit();" value="delete">
+    	  			</form>
+    	  		</td>
+    		</tr>
+    
+
+      		}
+
+      	</table>
+      <a href="@routes.ValueListKSABController.createValueListKSAB">Create new ValueListKSAB</a>
+    </div>
+  </div>
+  }

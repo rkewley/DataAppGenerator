@@ -1,0 +1,55 @@
+
+@(listTopicReferences: List[MdlTopicReferences], topicId: Long)
+    
+    @import persistence._
+    
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+    <div class="column span-20 last">
+		  <h3>TopicReferences Listing</h3>
+		  <table>
+			<tr>
+				<th>idTopicReferences</th>
+				<th>Topic</th>
+				<th>Reference</th>
+				<th>Show</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+
+            @listTopicReferences.map { vTopicReferences =>
+    			
+    		<tr>
+				<td>@vTopicReferences.vidTopicReferences</td>
+
+    		@defining(SqlTopics.select(vTopicReferences.vTopic)){pkModel =>
+      		  <td><a href="@routes.TopicsController.showTopics(vTopicReferences.vTopic)">@pkModel.selectIdentifier._2</a></td>
+    		}
+
+    		@defining(SqlReference.select(vTopicReferences.vReference)){pkModel =>
+      		  <td><a href="@routes.ReferenceController.showReference(vTopicReferences.vReference)">@pkModel.selectIdentifier._2</a></td>
+    		}
+
+    			<td><a href="@routes.TopicReferencesController.showTopicReferences(vTopicReferences.vidTopicReferences)">Show</a></td>
+    			<td><a href="@routes.TopicReferencesController.editTopicReferences(vTopicReferences.vidTopicReferences)">Edit</a></td>
+    	  		<td>
+    	  			<form action="@routes.TopicReferencesController.deleteTopicReferences(vTopicReferences.vidTopicReferences)" method="POST">
+    	  			<input type="button" onclick="if (confirm('Are you sure you want to delete?\n  This action cannot be undone.')) submit();" value="delete">
+    	  			</form>
+    	  		</td>
+    		</tr>
+    
+
+      		}
+
+      	</table>
+      <a href="@routes.TopicReferencesController.createTopicReferences(topicId)">Create new topic references</a>
+    </div>
+  </div>
+  }

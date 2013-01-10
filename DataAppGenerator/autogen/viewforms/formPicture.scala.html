@@ -1,0 +1,52 @@
+
+@(f: Form[MdlPicture], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.PictureController.savePicture(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fidPicture")) { fidPicture =>
+                <input type="hidden" name="@fidPicture.name" id="@fidPicture.id" value="@fidPicture.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @defining(f("fidPicture")) { fidPicture =>
+                <input type="hidden" name="@fidPicture.name" id="@fidPicture.id" value="@fidPicture.value">
+			}
+    
+     	}
+
+            @textarea(field = f("fHyperlink"), args = 'rows -> 2, 'cols -> 100, '_label-> "Hyperlink")
+        	@*@inputText(f("fHyperlink"), '_label -> "Hyperlink")*@
+
+            @textarea(field = f("fAlternateText"), args = 'rows -> 2, 'cols -> 100, '_label-> "AlternateText")
+        	@*@inputText(f("fAlternateText"), '_label -> "AlternateText")*@
+
+            @textarea(field = f("fCaption"), args = 'rows -> 2, 'cols -> 100, '_label-> "Caption")
+        	@*@inputText(f("fCaption"), '_label -> "Caption")*@
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.PictureController.listPicture">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

@@ -1,0 +1,42 @@
+
+@(f: Form[MdlValueListKSAB], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.ValueListKSABController.saveValueListKSAB(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fKSAB")) { fKSAB =>
+                <input type="hidden" name="@fKSAB.name" id="@fKSAB.id" value="@fKSAB.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @textarea(field = f("fKSAB"), args = 'rows -> 2, 'cols -> 100, '_label-> "KSAB")
+        	@*@inputText(f("fKSAB"), '_label -> "KSAB")*@
+
+     	}
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.ValueListKSABController.listValueListKSAB">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

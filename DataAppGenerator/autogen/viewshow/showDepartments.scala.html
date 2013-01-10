@@ -1,0 +1,37 @@
+
+@(vDepartments: MdlDepartments)
+
+    @import persistence._
+		  
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+     <div class="column span-16">
+		  <h3>Departments Information</h3>
+		  <dl>
+
+		  	<dt>DepartmentID</dt>
+		  	<dd>@Html(vDepartments.vDepartmentID.toString)</dd>
+
+		  	<dt>DepartmentName</dt>
+		  	<dd>@Html(vDepartments.vDepartmentName.toString)</dd>
+
+		  	<dt>DepartmentHead</dt>
+		  	<dd>@Html(vDepartments.vDepartmentHead.toString)</dd>
+
+		  	<dt>DepartmentHopePage</dt>
+		  	<dd>@Html(vDepartments.vDepartmentHopePage.toString)</dd>
+	       </dl>
+     <div>
+       <a href="@routes.DepartmentsController.listDepartments">Return to listing</a>
+     </div>
+	</div>
+   <div class="column span-4 last">
+   </div>
+  </div>
+  }

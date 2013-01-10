@@ -1,0 +1,55 @@
+
+@(f: Form[MdlFacultyLessonTeachingStrategy], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+
+@defining(f("fLessons_LessonIndex").value.get.toLong) { vLessons_LessonIndex =>  
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.FacultyLessonTeachingStrategyController.saveFacultyLessonTeachingStrategy(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fFaculty_Email")) { fFaculty_Email =>
+                <input type="hidden" name="@fFaculty_Email.name" id="@fFaculty_Email.id" value="@fFaculty_Email.value">
+			}
+    
+
+            @defining(f("fLessons_LessonIndex")) { fLessons_LessonIndex =>
+                <input type="hidden" name="@fLessons_LessonIndex.name" id="@fLessons_LessonIndex.id" value="@fLessons_LessonIndex.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @textarea(field = f("fFaculty_Email"), args = 'rows -> 2, 'cols -> 100, '_label-> "Faculty_Email")
+        	@*@inputText(f("fFaculty_Email"), '_label -> "Faculty_Email")*@
+
+
+            @inputText(f("fLessons_LessonIndex"), '_label -> "Lessons_LessonIndex")
+
+     	}
+
+            @textarea(field = f("fTeachingStrategy"), args = 'rows -> 2, 'cols -> 100, '_label-> "TeachingStrategy")
+        	@*@inputText(f("fTeachingStrategy"), '_label -> "TeachingStrategy")*@
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.FacultyLessonTeachingStrategyController.listFacultyLessonTeachingStrategy(vLessons_LessonIndex)">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }
+  }

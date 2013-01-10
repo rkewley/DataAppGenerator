@@ -1,0 +1,55 @@
+
+@(f: Form[MdlCourseLinks], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.CourseLinksController.saveCourseLinks(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fidCourseLinks")) { fidCourseLinks =>
+                <input type="hidden" name="@fidCourseLinks.name" id="@fidCourseLinks.id" value="@fidCourseLinks.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @defining(f("fidCourseLinks")) { fidCourseLinks =>
+                <input type="hidden" name="@fidCourseLinks.name" id="@fidCourseLinks.id" value="@fidCourseLinks.value">
+			}
+    
+     	}
+
+            @{val selectvCourses = SqlCourses.all.map(vCourses => vCourses.selectIdentifier).toSeq
+            select(field = f("fCourse"), options = selectvCourses, args = '_label-> "Course")}
+    		<a href="@routes.CoursesController.createCourses">Create new Courses</a>
+
+            @textarea(field = f("fLink"), args = 'rows -> 2, 'cols -> 100, '_label-> "Link")
+        	@*@inputText(f("fLink"), '_label -> "Link")*@
+
+            @textarea(field = f("fDisplayDescription"), args = 'rows -> 2, 'cols -> 100, '_label-> "DisplayDescription")
+        	@*@inputText(f("fDisplayDescription"), '_label -> "DisplayDescription")*@
+
+            @inputText(f("fIsFileLink"), '_label -> "IsFileLink")
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.CourseLinksController.listCourseLinks">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

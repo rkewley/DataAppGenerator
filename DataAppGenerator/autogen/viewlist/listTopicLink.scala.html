@@ -1,0 +1,54 @@
+
+@(listTopicLink: List[MdlTopicLink])
+    
+    @import persistence._
+    
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+    <div class="column span-20 last">
+		  <h3>TopicLink Listing</h3>
+		  <table>
+			<tr>
+				<th>idTopicLink</th>
+				<th>Topic</th>
+				<th>Link</th>
+				<th>Description</th>
+				<th>Show</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+
+            @listTopicLink.map { vTopicLink =>
+    			
+    		<tr>
+				<td>@vTopicLink.vidTopicLink</td>
+
+    		@defining(SqlTopics.select(vTopicLink.vTopic)){pkModel =>
+      		  <td><a href="@routes.TopicsController.showTopics(vTopicLink.vTopic)">@pkModel.selectIdentifier._2</a></td>
+    		}
+				<td>@vTopicLink.vLink</td>
+				<td>@vTopicLink.vDescription</td>
+
+    			<td><a href="@routes.TopicLinkController.showTopicLink(vTopicLink.vidTopicLink)">Show</a></td>
+    			<td><a href="@routes.TopicLinkController.editTopicLink(vTopicLink.vidTopicLink)">Edit</a></td>
+    	  		<td>
+    	  			<form action="@routes.TopicLinkController.deleteTopicLink(vTopicLink.vidTopicLink)" method="POST">
+    	  			<input type="button" onclick="if (confirm('Are you sure you want to delete?\n  This action cannot be undone.')) submit();" value="delete">
+    	  			</form>
+    	  		</td>
+    		</tr>
+    
+
+      		}
+
+      	</table>
+      <a href="@routes.TopicLinkController.createTopicLink">Create new TopicLink</a>
+    </div>
+  </div>
+  }

@@ -1,0 +1,49 @@
+
+@(f: Form[MdlLink], newEntry: Int)
+
+@import helper._
+@import persistence._
+
+
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+<div class="column span-20 last">
+    <fieldset>
+    @helper.form(routes.LinkController.saveLink(newEntry)) {
+
+
+        @if(newEntry == 0) {
+		  
+            @defining(f("fidLink")) { fidLink =>
+                <input type="hidden" name="@fidLink.name" id="@fidLink.id" value="@fidLink.value">
+			}
+    
+		}
+		@if(newEntry != 0) {
+     		
+            @defining(f("fidLink")) { fidLink =>
+                <input type="hidden" name="@fidLink.name" id="@fidLink.id" value="@fidLink.value">
+			}
+    
+     	}
+
+            @textarea(field = f("fDescription"), args = 'rows -> 2, 'cols -> 100, '_label-> "Description")
+        	@*@inputText(f("fDescription"), '_label -> "Description")*@
+
+            @textarea(field = f("fLink"), args = 'rows -> 2, 'cols -> 100, '_label-> "Link")
+        	@*@inputText(f("fLink"), '_label -> "Link")*@
+
+       		<fieldset style="margin-top: 10px;">
+          		<input type="submit" value="Submit" />
+          		<a href="@routes.LinkController.listLink">Cancel and return to listing</a>
+      		</fieldset>
+        }
+	  	</fieldset></div>
+    </div>
+  </div>
+  }

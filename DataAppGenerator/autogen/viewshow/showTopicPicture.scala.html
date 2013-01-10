@@ -1,0 +1,42 @@
+
+@(vTopicPicture: MdlTopicPicture)
+
+    @import persistence._
+		  
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+     <div class="column span-16">
+		  <h3>TopicPicture Information</h3>
+		  <dl>
+
+		  	<dt>idTopicPicture</dt>
+		  	<dd>@Html(vTopicPicture.vidTopicPicture.toString)</dd>
+
+    		@defining(SqlTopics.select(vTopicPicture.vTopic)){pkModel =>
+      		  <dt>Topic</dt>
+      		  <dd><a href="@routes.TopicsController.showTopics(vTopicPicture.vTopic)">@pkModel.selectIdentifier._2</a></dd>
+    		}
+
+		  	<dt>Hyperlink</dt>
+		  	<dd>@Html(vTopicPicture.vHyperlink.toString)</dd>
+
+		  	<dt>AlternateText</dt>
+		  	<dd>@Html(vTopicPicture.vAlternateText.toString)</dd>
+
+		  	<dt>Caption</dt>
+		  	<dd>@Html(vTopicPicture.vCaption.toString)</dd>
+	       </dl>
+     <div>
+       <a href="@routes.TopicPictureController.listTopicPicture">Return to listing</a>
+     </div>
+	</div>
+   <div class="column span-4 last">
+   </div>
+  </div>
+  }

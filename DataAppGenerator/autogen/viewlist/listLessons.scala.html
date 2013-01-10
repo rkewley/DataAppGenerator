@@ -1,0 +1,64 @@
+
+@(listLessons: List[MdlLessons])
+    
+    @import persistence._
+    
+    
+    @main("Systems Net", "Systems Body of Knowledge") {
+	<div>
+	  <div class="column span-4">
+		 
+	  </div>
+
+    
+    <div class="column span-20 last">
+		  <h3>Lessons Listing</h3>
+		  <table>
+			<tr>
+				<th>LessonIndex</th>
+				<th>LessonNumber</th>
+				<th>LessonName</th>
+				<th>Assignment</th>
+				<th>Location</th>
+				<th>idCourse</th>
+				<th>Duration</th>
+				<th>Lab</th>
+				<th>LessonSummary</th>
+				<th>Show</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+
+            @listLessons.map { vLessons =>
+    			
+    		<tr>
+				<td>@vLessons.vLessonIndex</td>
+				<td>@vLessons.vLessonNumber</td>
+				<td>@vLessons.vLessonName</td>
+				<td>@vLessons.vAssignment</td>
+				<td>@vLessons.vLocation</td>
+
+    		@defining(SqlCourses.select(vLessons.vidCourse)){pkModel =>
+      		  <td><a href="@routes.CoursesController.showCourses(vLessons.vidCourse)">@pkModel.selectIdentifier._2</a></td>
+    		}
+				<td>@vLessons.vDuration</td>
+				<td>@vLessons.vLab</td>
+				<td>@vLessons.vLessonSummary</td>
+
+    			<td><a href="@routes.LessonsController.showLessons(vLessons.vLessonIndex)">Show</a></td>
+    			<td><a href="@routes.LessonsController.editLessons(vLessons.vLessonIndex)">Edit</a></td>
+    	  		<td>
+    	  			<form action="@routes.LessonsController.deleteLessons(vLessons.vLessonIndex)" method="POST">
+    	  			<input type="button" onclick="if (confirm('Are you sure you want to delete?\n  This action cannot be undone.')) submit();" value="delete">
+    	  			</form>
+    	  		</td>
+    		</tr>
+    
+
+      		}
+
+      	</table>
+      <a href="@routes.LessonsController.createLessons">Create new Lessons</a>
+    </div>
+  </div>
+  }
