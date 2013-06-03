@@ -5,7 +5,7 @@ object ListGenerator {
     """
 @(%s: List[%s])
     
-    @import persistence._
+    @import slick.AppDB
     
     %s
     
@@ -21,7 +21,7 @@ object ListGenerator {
     """
 @(%s: List[%s], id%s: Long)
     
-    @import persistence._
+    @import slick.AppDB
     
     %s
     
@@ -45,7 +45,6 @@ object ListGenerator {
   
   def genRows(tableName: String, db: DB): String = {
     val controllerName = DataAppGenerator.controllerName(tableName)
-    val showName = DataAppGenerator.showName(tableName)
     val editName = DataAppGenerator.editName(tableName)
     val tableValue = DataAppGenerator.valueName(tableName)  
     val deleteName = DataAppGenerator.deleteName(tableName) 
@@ -62,11 +61,11 @@ object ListGenerator {
           val fk = foreignKey.fk
           val pk = foreignKey.pk
 """
-    		@defining(%s.select(%s.%s)){pkModel =>
-      		  <td><a href="@routes.%s.%s(%s.%s)">@pkModel.selectIdentifier._2</a></td>
+    		@defining(%s.select(%s.%s).get){pkModel =>
+      		  <td><a href="@routes.%s.show(%s.%s)">@pkModel.selectIdentifier._2</a></td>
     		}
-""" format(DataAppGenerator.sqlObjectName(pk.table), DataAppGenerator.valueName(fk.table), DataAppGenerator.valueName(fk.column),
-			DataAppGenerator.controllerName(pk.table), DataAppGenerator.showName(pk.table), DataAppGenerator.valueName(fk.table), DataAppGenerator.valueName(fk.column))
+""" format(DataAppGenerator.slickDBName(pk.table), DataAppGenerator.valueName(fk.table), DataAppGenerator.valueName(fk.column),
+			DataAppGenerator.controllerName(pk.table), DataAppGenerator.valueName(fk.table), DataAppGenerator.valueName(fk.column))
     }
     def genNormalDataItem(field: FieldMetaData): String = "\t\t\t\t<td>@" + 
     	DataAppGenerator.valueName(tableName)+ "." + DataAppGenerator.valueName(field.column) + "</td>\n"
@@ -78,18 +77,18 @@ object ListGenerator {
     def genRowItem: String = {"""
     		<tr>
 %s
-    			<td><a href="@routes.%s.%s(%s.%s)">Show</a></td>
-    			<td><a href="@routes.%s.%s(%s.%s)">Edit</a></td>
+    			<td><a href="@routes.%s.show(%s.%s.get)">Show</a></td>
+    			<td><a href="@routes.%s.edit(%s.%s.get)">Edit</a></td>
     	  		<td>
-    	  			<form action="@routes.%s.%s(%s.%s)" method="POST">
+    	  			<form action="@routes.%s.delete(%s.%s)" method="POST">
     	  			<input type="button" onclick="if (confirm('Are you sure you want to delete?\n  This action cannot be undone.')) submit();" value="delete">
     	  			</form>
     	  		</td>
     		</tr>
     
-""" format(genRowDataItems, controllerName, showName, tableValue, keyValue,
-		controllerName, editName, tableValue, keyValue,
-		controllerName, deleteName, tableValue, keyValue)
+""" format(genRowDataItems, controllerName, tableValue, keyValue,
+		controllerName, tableValue, keyValue,
+		controllerName, tableValue, keyValue)
     }
     """
             @%s.map { %s =>
@@ -100,7 +99,7 @@ object ListGenerator {
   
   def genFooter(tableName: String): String = {"""
       	</table>
-      <a href="@routes.%s.%s">Create new %s</a>
+      <a href="@routes.%s.%s(0)">Create new %s</a>
     </div>
   </div>
   }
@@ -109,11 +108,11 @@ object ListGenerator {
   }
   def genFooterFk(tableName: String, foreignKey: ForeignKeyMetaData): String = {"""
       	</table>
-      <a href="@routes.%s.%s(id%s)">Create new %s</a>
+      <a href="@routes.%s.create(id%s)">Create new %s</a>
     </div>
   </div>
   }
-""" format (DataAppGenerator.controllerName(tableName), DataAppGenerator.createName(tableName), DataAppGenerator.noWhitespace(foreignKey.pk.table), tableName)
+""" format (DataAppGenerator.controllerName(tableName), DataAppGenerator.noWhitespace(foreignKey.pk.table), tableName)
     
   }
     
@@ -124,7 +123,7 @@ object ListGenerator {
       case (_) => genHeader(tableName) + genHeadings(tableName, db) + genRows(tableName, db) + genFooter(tableName)
     }
     println(listData)
-    DataAppGenerator.writeStringToFile("autogen/viewlist/" + DataAppGenerator.listName(tableName) + ".scala.html", listData)
+    DataAppGenerator.writeStringToFile("autogen/views/viewlist/" + DataAppGenerator.listName(tableName) + ".scala.html", listData)
   }
 
 }

@@ -7,13 +7,13 @@ class DB {
 import java.sql.{Connection, DriverManager, ResultSet};
 
   // Change to Your Database Config
-  val conn_str = "jdbc:mysql://localhost:3306/SECourseData"
+  val conn_str = "jdbc:mysql://localhost:3306/SECourseData2"
 
   // Load the driver
   classOf[com.mysql.jdbc.Driver]
 
   // Setup the connection
-  val conn = DriverManager.getConnection(conn_str, "student", "student")
+  val conn = DriverManager.getConnection(conn_str, "faculty", "G0Systems!")
   val metaData = conn.getMetaData();
 
 
@@ -73,7 +73,7 @@ import java.sql.{Connection, DriverManager, ResultSet};
   }
   
   def getForeignKeys(tableName: String): List[ForeignKeyMetaData] = {
-    val rs = metaData.getImportedKeys(null, null, tableName: String)
+    val rs = metaData.getImportedKeys(null, null, tableName)
     def getForeignKeysMetaData(list: List[ForeignKeyMetaData]): List[ForeignKeyMetaData] = {
       if(rs.next) {
         val fkColumn = rs.getString("FKCOLUMN_NAME")

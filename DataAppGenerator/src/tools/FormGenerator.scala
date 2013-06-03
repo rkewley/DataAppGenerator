@@ -16,11 +16,11 @@ object FormGenerator {
 
 <div class="column span-20 last">
     <fieldset>
-    @helper.form(routes.%s.%s(newEntry)) {
+    @helper.form(routes.%s.save(newEntry)) {
 
 """ format(modelName, 
     DataAppGenerator.setInSiteContext("Systems Body of Knowledge", ""),
-    controllerName, saveName)
+    controllerName)
   }
   
   def genHeaderFk(tableName: String, foreignKey: ForeignKeyMetaData): String = {
@@ -136,7 +136,7 @@ object FormGenerator {
 	"""
        		<fieldset style="margin-top: 10px;">
           		<input type="submit" value="Submit" />
-          		<a href="@routes.%s.%s">Cancel and return to listing</a>
+          		<a href="@routes.%s.%s(0)">Cancel and return to listing</a>
       		</fieldset>
         }
 	  	</fieldset></div>
@@ -151,7 +151,7 @@ object FormGenerator {
 	"""
        		<fieldset style="margin-top: 10px;">
           		<input type="submit" value="Submit" />
-          		<a href="@routes.%s.%s(%s)">Cancel and return to listing</a>
+          		<a href="@routes.%s.list(%s)">Cancel and return to listing</a>
       		</fieldset>
         }
 	  	</fieldset></div>
@@ -159,7 +159,7 @@ object FormGenerator {
   </div>
   }
   }
-""" format (DataAppGenerator.controllerName(tableName), DataAppGenerator.listName(tableName), DataAppGenerator.valueName(fixedForeignKey.fk.column))
+""" format (DataAppGenerator.controllerName(tableName), DataAppGenerator.valueName(fixedForeignKey.fk.column))
 
   }
   
@@ -174,7 +174,7 @@ object FormGenerator {
     	genInputFields(fields, primaryKeys, foreignKeys, db, fixedForeignKey) + genSubmit(tableName)
     }
     println(formString)
-    DataAppGenerator.writeStringToFile("autogen/viewforms/" + DataAppGenerator.formName(tableName) + ".scala.html", formString)
+    DataAppGenerator.writeStringToFile("autogen/views/viewforms/" + DataAppGenerator.formName(tableName) + ".scala.html", formString)
 
   }
 

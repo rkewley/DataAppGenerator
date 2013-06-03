@@ -32,9 +32,12 @@ object DataAppGenerator {
   def sqlName(fieldName: String) = ("sql" + fieldName).replaceAll(" ", "")
   def formValue(fieldName: String) = ("f" + fieldName).replaceAll(" ", "")
   def sqlObjectName(tableName: String)   = ("Sql" + tableName).replaceAll(" ", "")
+  def slickObjectName(tableName: String)   = ("Slick" + tableName).replaceAll(" ", "")
+  def slickDBName(tableName: String) = ("AppDB.dal." + tableName).replaceAll(" ", "")
   def formName(tableName: String) = ("form" + tableName).replaceAll(" ", "")
   def showName(tableName: String) = ("show" + tableName).replaceAll(" ", "")
   def listName(tableName: String) = ("list" + tableName).replaceAll(" ", "")
+  def listSelectedName(tableName: String) = ("listSelected" + tableName).replaceAll(" ", "")
   def createName(tableName: String) = ("create" + tableName).replaceAll(" ", "")
   def deleteName(tableName: String) = ("delete" + tableName).replaceAll(" ", "")
   def saveName(tableName: String) = ("save" + tableName).replaceAll(" ", "")
@@ -73,6 +76,9 @@ object DataAppGenerator {
           val tableName = split(0)
           val fixedForeignKeyName = split(1)
           println("Tablename is " + tableName + " and fixed foreign key name is " + fixedForeignKeyName)
+          println("Foreign key count for " + tableName + " is " + database.getForeignKeys(tableName).size)
+          database.getForeignKeys(tableName).foreach(foreignKey =>
+            println("foreignKey.pk.table = " + foreignKey.pk.table + "\n"))
           (split(0), database.getForeignKeys(tableName).find(foreignKey => foreignKey.pk.table == split(1)))
         }
         case (_) => {
@@ -88,7 +94,7 @@ object DataAppGenerator {
         println("Fixed foreign key column is " + fkName)
 	    ModelGenerator.writeModel(tableName, database)
 	    ControllerGenerator.writeController(tableName, database, fixedForeignKey)
-	    SqlGenerator.writeSql(tableName, database)
+	    SlickGenerator.writeSlick(tableName, database)
 	    FormGenerator.writeForm(tableName, database, fixedForeignKey)
 	    RouteGenerator.writeRoutes(tableName, database, fixedForeignKey)
 	    ListGenerator.writeListForm(tableName, database, fixedForeignKey)

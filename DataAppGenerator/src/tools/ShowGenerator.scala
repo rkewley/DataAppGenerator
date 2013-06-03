@@ -6,7 +6,7 @@ object ShowGenerator {
     """
 @(%s: %s)
 
-    @import persistence._
+    @import slick.AppDB
 		  
     %s
     
@@ -22,13 +22,13 @@ object ShowGenerator {
     val fk = foreignKey.fk
     val pk = foreignKey.pk
 """
-    		@defining(%s.select(%s.%s)){pkModel =>
+    		@defining(%s.select(%s.%s).get){pkModel =>
       		  <dt>%s</dt>
-      		  <dd><a href="@routes.%s.%s(%s.%s)">@pkModel.selectIdentifier._2</a></dd>
+      		  <dd><a href="@routes.%s.show(%s.%s)">@pkModel.selectIdentifier._2</a></dd>
     		}
-""" format(DataAppGenerator.sqlObjectName(pk.table), DataAppGenerator.valueName(fk.table), DataAppGenerator.valueName(fk.column),
+""" format(DataAppGenerator.slickDBName(pk.table), DataAppGenerator.valueName(fk.table), DataAppGenerator.valueName(fk.column),
 			foreignKey.fk.column, 
-			DataAppGenerator.controllerName(pk.table), DataAppGenerator.showName(pk.table), DataAppGenerator.valueName(fk.table), DataAppGenerator.valueName(fk.column))
+			DataAppGenerator.controllerName(pk.table), DataAppGenerator.valueName(fk.table), DataAppGenerator.valueName(fk.column))
   }
     
   
@@ -42,7 +42,7 @@ object ShowGenerator {
     val foreignKeys = db.getForeignKeys(tableName)
     val routeListFkIndex = fixedForeignKey match {
       case Some(foreignKey) => """(%s.%s)""" format(DataAppGenerator.valueName(tableName), DataAppGenerator.valueName(foreignKey.fk.column))
-      case None => ""
+      case None => "(0)"
     }
     fields.map(field => db.isKey(field, foreignKeys.map(_.fk)) match {
       case true =>
@@ -52,7 +52,7 @@ object ShowGenerator {
     }).mkString("") + 
 "	       </dl>\n" +
 "     <div>\n" + 
-"       <a href=\"@routes." + DataAppGenerator.controllerName(tableName) + "." + DataAppGenerator.listName(tableName) + routeListFkIndex + "\">Return to listing</a>\n" +
+"       <a href=\"@routes." + DataAppGenerator.controllerName(tableName) + ".list" + routeListFkIndex + "\">Return to listing</a>\n" +
 "     </div>\n" +
 "	</div>\n" +
 "   <div class=\"column span-4 last\">\n" +
@@ -65,7 +65,7 @@ object ShowGenerator {
     val fields = db.getFieldList(tableName)
     val showData = genHeader(tableName) + genShowInformation(tableName, fields, db, fixedForeignKey)
     println(showData)
-    DataAppGenerator.writeStringToFile("autogen/viewshow/" + DataAppGenerator.showName(tableName) + ".scala.html", showData)
+    DataAppGenerator.writeStringToFile("autogen/views/viewshow/" + DataAppGenerator.showName(tableName) + ".scala.html", showData)
   }
   
 
