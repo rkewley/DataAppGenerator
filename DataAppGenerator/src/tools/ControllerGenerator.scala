@@ -129,7 +129,8 @@ object %sController extends ControllerTrait[%s, %s, %s] with Base {
   }
   
   def genNewItem(tableName: String) = { """
-	def newItem(fkId: Long) = new %s""" format(DataAppGenerator.noWhitespace(tableName))
+	def newItem(fkId: Long) = new %s
+  }""" format(DataAppGenerator.modelName(tableName))
   }
     
   def genNewItemFk(tableName: String, fixedForeignKey: ForeignKeyMetaData) = {
@@ -177,7 +178,7 @@ object %sController extends ControllerTrait[%s, %s, %s] with Base {
           }
           case None => {
             println("Contoller does not have fixed foreign key")
-            genControllerHeader(tableName, primaryKey, "Long") + form + definitions + genNewItem(tableName) +
+            genControllerHeader(tableName, primaryKey, "Long") + 
               form + listDefinitions + definitions + genNewItem(tableName)
 
           }
