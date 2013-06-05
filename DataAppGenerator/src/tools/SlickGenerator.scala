@@ -16,10 +16,10 @@ trait %sComponent  {
 	  
 	import profile.simple._
 
-	object %s extends Table[%s]("Programs") with Crud[%s, %s]  {
+	object %s extends Table[%s]("%s") with Crud[%s, %s]  {
 """ format (modelName, 
     noWhitespace,
-    noWhitespace, modelName, modelName, DataAppGenerator.fieldType(primaryKey))
+    noWhitespace, modelName, noWhitespace, modelName, DataAppGenerator.fieldType(primaryKey))
   }
   
   def genColumnMapping(field: FieldMetaData): String = {

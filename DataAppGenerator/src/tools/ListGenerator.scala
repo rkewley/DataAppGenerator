@@ -80,7 +80,7 @@ object ListGenerator {
     			<td><a href="@routes.%s.show(%s.%s.get)">Show</a></td>
     			<td><a href="@routes.%s.edit(%s.%s.get)">Edit</a></td>
     	  		<td>
-    	  			<form action="@routes.%s.delete(%s.%s)" method="POST">
+    	  			<form action="@routes.%s.delete(%s.%s.get)" method="POST">
     	  			<input type="button" onclick="if (confirm('Are you sure you want to delete?\n  This action cannot be undone.')) submit();" value="delete">
     	  			</form>
     	  		</td>

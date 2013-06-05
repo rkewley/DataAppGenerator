@@ -38,12 +38,12 @@ object FormGenerator {
 @defining(f("%s").value.get.toLong) { %s =>  
 <div class="column span-20 last">
     <fieldset>
-    @helper.form(routes.%s.%s(newEntry)) {
+    @helper.form(routes.%s.save(newEntry)) {
 
 """ format(modelName, 
     DataAppGenerator.setInSiteContext("Systems Body of Knowledge", ""),
     DataAppGenerator.formValue(foreignKey.fk.column), DataAppGenerator.valueName(foreignKey.fk.column),
-    controllerName, saveName)
+    controllerName)
   }
   def genHiddenInput(field: FieldMetaData): String = {
     val formValue = DataAppGenerator.formValue(field.column)
