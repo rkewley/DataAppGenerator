@@ -136,14 +136,14 @@ object FormGenerator {
 	"""
        		<fieldset style="margin-top: 10px;">
           		<input type="submit" value="Submit" />
-          		<a href="@routes.%s.%s(0)">Cancel and return to listing</a>
+          		<a href="@routes.%s.list(0)">Cancel and return to listing</a>
       		</fieldset>
         }
 	  	</fieldset></div>
     </div>
   </div>
   }
-""" format (DataAppGenerator.controllerName(tableName), DataAppGenerator.listName(tableName))
+""" format (DataAppGenerator.controllerName(tableName))
 
   }
   
